@@ -1,6 +1,6 @@
 # 이성아
 
-<img src="./BABYSEONGA.heic" width="150"/>
+<img src="./BABYSEONGA.jpg" width="150"/>
 
 ▫**전공** | 융합소프트웨어학부
 데이터사이언스 본전공
