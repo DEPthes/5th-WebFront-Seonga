@@ -1,6 +1,6 @@
 # 이성아
 
-<img src="/Users/leeseonga/5th-WebFront-Seonga/BABYSEONGA.jpg" width="150"/>
+![BABYSEONGA](https://github.com/DEPthes/5th-WebFront-Seonga/blob/main/BABYSEONGA.jpg?raw=true)
 
 ▫**전공** | 융합소프트웨어학부
 데이터사이언스 본전공
