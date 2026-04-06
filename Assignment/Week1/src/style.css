@@ -4,9 +4,9 @@
 
   width: 390px;
   min-height: 1190px;
+  margin: 0 auto;
 
   background: var(--bg);
-  color: #f6f8ff;
 }
 
 /* navigation */
@@ -237,4 +237,12 @@
   font-size: 14px;
   line-height: 1.2;
   color: var(--white);
+}
+
+/* global */
+:root {
+  --bg: #fcfbfe;
+  --panel: #a8b9e0;
+  --accent: #fef5a2;
+  --white: #fffdfc;
 }
