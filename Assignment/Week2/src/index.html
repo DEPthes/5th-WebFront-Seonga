@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trovel Login</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="login-page">
+      <!-- 왼쪽 앱 미리보기 영역 -->
+      <section class="mockup-section" aria-label="Trovel 앱 미리보기">
+        <div class="phone-mockups">
+          <img
+            class="phone phone-back"
+            src="assets/trovel-feed-screen-mockup.png"
+            alt="Trovel 앱 피드 화면 미리보기"
+          />
+
+          <img
+            class="phone phone-front"
+            src="assets/trovel-start-screen-mockup.png"
+            alt="Trovel 앱 시작 화면 미리보기"
+          />
+        </div>
+      </section>
+
+      <!-- 오른쪽 로그인 영역 -->
+      <section class="auth-section" aria-label="로그인 영역">
+        <div class="login-card">
+          <h1 class="logo">
+            <img src="assets/mainlogo.png" alt="Trovel" />
+          </h1>
+
+          <form class="login-form" action="#" method="post">
+            <label class="sr-only" for="user-id">
+              전화번호, 사용자 이름 또는 이메일
+            </label>
+
+            <div class="input-box">
+              <img
+                class="input-icon"
+                src="assets/mail.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              <input
+                id="user-id"
+                name="userId"
+                type="text"
+                placeholder="전화번호, 사용자 이름 또는 이메일"
+              />
+            </div>
+
+            <label class="sr-only" for="password">비밀번호</label>
+
+            <div class="input-box">
+              <img
+                class="input-icon"
+                src="assets/lock.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="비밀번호"
+              />
+            </div>
+
+            <button class="login-button" type="submit">로그인</button>
+
+            <p class="divider">or</p>
+
+            <button class="kakao-button" type="button">
+              <img
+                class="kakao-icon"
+                src="assets/kakao.png"
+                alt="kakao-icon"
+                aria-hidden="true"
+              />
+              카카오 로그인
+            </button>
+
+            <a class="forgot-password" href="#"> 비밀번호를 잊으셨나요? </a>
+          </form>
+        </div>
+
+        <div class="signup-card">
+          <p>
+            계정이 없으신가요?
+            <a href="#">가입하기</a>
+          </p>
+        </div>
+
+        <div class="download-section">
+          <p>앱을 다운로드 하세요.</p>
+
+          <div class="store-buttons">
+            <a href="#" aria-label="Google Play에서 다운로드">
+              <img src="assets/google-play.svg" alt="Google Play 다운로드" />
+            </a>
+
+            <a href="#" aria-label="App Store에서 다운로드">
+              <img src="assets/apple-store.svg" alt="App Store 다운로드" />
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

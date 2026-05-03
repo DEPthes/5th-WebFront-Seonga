@@ -1,0 +1,370 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --gray-50: #f6f6f6;
+  --gray-200: #cccccc;
+  --gray-300: #d0d5dd;
+  --gray-500: #7f7f7f;
+  --white: #ffffff;
+  --black: #000000;
+  --blue-200: #b2ddff;
+  --blue-500: #2e90fa;
+  --kakao-yellow: #f8d706;
+  --shadow-xs: 0px 1px 2px rgba(16, 24, 40, 0.05);
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Inter", "Noto Sans KR", Arial, sans-serif;
+  background-color: var(--gray-50);
+  color: var(--black);
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #4a90e2;
+  outline-offset: 3px;
+}
+
+/* 전체 페이지 */
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--gray-50);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: clamp(48px, 5vw, 72px);
+  padding: clamp(48px, 9vh, 96px) clamp(24px, 5vw, 40px);
+}
+
+/* 왼쪽 목업 영역 */
+.mockup-section {
+  width: clamp(420px, 36vw, 520px);
+  height: clamp(630px, 54vw, 780px);
+}
+
+.phone-mockups {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.phone {
+  position: absolute;
+  width: 69.8%;
+  height: auto;
+  object-fit: contain;
+}
+
+.phone-back {
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.phone-front {
+  top: 6.6%;
+  left: 30.2%;
+  z-index: 2;
+}
+
+/* 오른쪽 로그인 전체 영역 */
+.auth-section {
+  width: min(416px, 100%);
+}
+
+/* 로그인 카드 */
+.login-card {
+  width: 100%;
+  min-height: 559px;
+  padding: clamp(56px, 6.7vh, 69px) 48px 36px;
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+  text-align: center;
+}
+
+.logo {
+  margin: 0 0 clamp(48px, 5.5vh, 57px);
+}
+
+.logo img {
+  width: min(217px, 70%);
+  height: auto;
+  object-fit: contain;
+}
+
+/* 로그인 폼 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 입력창 */
+.input-box {
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 14px 10px 20px;
+  margin-bottom: 10px;
+
+  background-color: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: 30px;
+  box-shadow: var(--shadow-xs);
+}
+
+.input-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: var(--black);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.input-box input::placeholder {
+  color: var(--gray-500);
+}
+
+/* 로그인 버튼 */
+.login-button {
+  width: 100%;
+  max-width: 320px;
+  height: 44px;
+  margin-top: 10px;
+
+  border-radius: 30px;
+  background-color: var(--blue-200);
+
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* or */
+.divider {
+  margin: 14px 0 10px;
+  color: var(--gray-500);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* 카카오 로그인 버튼 */
+.kakao-button {
+  width: 100%;
+  max-width: 320px;
+  height: 44px;
+
+  border-radius: 30px;
+  background-color: var(--kakao-yellow);
+
+  color: #2f1b1a;
+  font-size: 16px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.kakao-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* 비밀번호 찾기 */
+.forgot-password {
+  margin-top: 30px;
+
+  color: var(--gray-500);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* 가입하기 카드 */
+.signup-card {
+  width: 100%;
+  height: 86px;
+  margin-top: 10px;
+
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-card p {
+  color: var(--gray-500);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.signup-card a {
+  color: var(--blue-500);
+  font-weight: 500;
+}
+
+/* 앱 다운로드 */
+.download-section {
+  margin-top: 17px;
+  text-align: center;
+}
+
+.download-section p {
+  margin-bottom: 10px;
+
+  color: var(--gray-500);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.store-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.store-buttons a {
+  display: inline-flex;
+}
+
+.store-buttons img {
+  height: 40px;
+  object-fit: contain;
+}
+
+/* 스크린리더 전용 텍스트 */
+.sr-only {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 태블릿 이하 */
+@media (max-width: 960px) {
+  .login-page {
+    padding: 40px 20px;
+  }
+
+  .mockup-section {
+    display: none;
+  }
+
+  .auth-section,
+  .login-card,
+  .signup-card {
+    width: 100%;
+    max-width: 416px;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  body {
+    background-color: var(--white);
+  }
+
+  .login-page {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .auth-section {
+    width: 100%;
+    max-width: none;
+  }
+
+  .login-card {
+    width: 100%;
+    min-height: auto;
+
+    padding: 110px 20px 40px;
+    border: none;
+  }
+
+  .logo {
+    margin-bottom: 64px;
+  }
+
+  .logo img {
+    width: 210px;
+    max-width: 70%;
+  }
+
+  .input-box,
+  .login-button,
+  .kakao-button {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .signup-card {
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    border: none;
+  }
+
+  .download-section {
+    display: none;
+  }
+}
