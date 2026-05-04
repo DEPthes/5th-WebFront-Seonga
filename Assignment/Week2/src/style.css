@@ -15,7 +15,7 @@
   --blue-200: #b2ddff;
   --blue-500: #2e90fa;
   --kakao-yellow: #f8d706;
-  --shadow-xs: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-xs: 0rem 0.0625rem 0.125rem rgba(16, 24, 40, 0.05);
 }
 
 html,
@@ -48,8 +48,8 @@ button {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
-  outline: 2px solid #4a90e2;
-  outline-offset: 3px;
+  outline: 0.125rem solid #4a90e2;
+  outline-offset: 0.1875rem;
 }
 
 /* 전체 페이지 */
@@ -62,14 +62,14 @@ input:focus-visible {
   justify-content: center;
   align-items: center;
 
-  gap: clamp(48px, 5vw, 72px);
-  padding: clamp(48px, 9vh, 96px) clamp(24px, 5vw, 40px);
+  gap: clamp(3rem, 5vw, 4.5rem);
+  padding: clamp(3rem, 9vh, 6rem) clamp(1.5rem, 5vw, 2.5rem);
 }
 
 /* 왼쪽 목업 영역 */
 .mockup-section {
-  width: clamp(420px, 36vw, 520px);
-  height: clamp(630px, 54vw, 780px);
+  width: clamp(26.25rem, 36vw, 32.5rem);
+  height: clamp(39.375rem, 54vw, 48.75rem);
 }
 
 .phone-mockups {
@@ -99,25 +99,25 @@ input:focus-visible {
 
 /* 오른쪽 로그인 전체 영역 */
 .auth-section {
-  width: min(416px, 100%);
+  width: min(26rem, 100%);
 }
 
 /* 로그인 카드 */
 .login-card {
   width: 100%;
-  min-height: 559px;
-  padding: clamp(56px, 6.7vh, 69px) 48px 36px;
+  min-height: 34.9375rem;
+  padding: clamp(3.5rem, 6.7vh, 4.3125rem) 3rem 2.25rem;
   background-color: var(--white);
-  border: 1px solid var(--gray-200);
+  border: 0.0625rem solid var(--gray-200);
   text-align: center;
 }
 
 .logo {
-  margin: 0 0 clamp(48px, 5.5vh, 57px);
+  margin: 0 0 clamp(3rem, 5.5vh, 3.5625rem);
 }
 
 .logo img {
-  width: min(217px, 70%);
+  width: min(13.5625rem, 70%);
   height: auto;
   object-fit: contain;
 }
@@ -132,25 +132,25 @@ input:focus-visible {
 /* 입력창 */
 .input-box {
   width: 100%;
-  max-width: 320px;
-  height: 50px;
+  max-width: 20rem;
+  height: 3.125rem;
 
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 
-  padding: 10px 14px 10px 20px;
-  margin-bottom: 10px;
+  padding: 0.625rem 0.875rem 0.625rem 1.25rem;
+  margin-bottom: 0.625rem;
 
   background-color: var(--white);
-  border: 1px solid var(--gray-300);
-  border-radius: 30px;
+  border: 0.0625rem solid var(--gray-300);
+  border-radius: 1.875rem;
   box-shadow: var(--shadow-xs);
 }
 
 .input-icon {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   flex-shrink: 0;
 }
 
@@ -163,7 +163,7 @@ input:focus-visible {
   background: transparent;
 
   color: var(--black);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -174,69 +174,69 @@ input:focus-visible {
 /* 로그인 버튼 */
 .login-button {
   width: 100%;
-  max-width: 320px;
-  height: 44px;
-  margin-top: 10px;
+  max-width: 20rem;
+  height: 2.75rem;
+  margin-top: 0.625rem;
 
-  border-radius: 30px;
+  border-radius: 1.875rem;
   background-color: var(--blue-200);
 
   color: var(--white);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
 }
 
 /* or */
 .divider {
-  margin: 14px 0 10px;
+  margin: 0.875rem 0 0.625rem;
   color: var(--gray-500);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 /* 카카오 로그인 버튼 */
 .kakao-button {
   width: 100%;
-  max-width: 320px;
-  height: 44px;
+  max-width: 20rem;
+  height: 2.75rem;
 
-  border-radius: 30px;
+  border-radius: 1.875rem;
   background-color: var(--kakao-yellow);
 
   color: #2f1b1a;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .kakao-icon {
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
   object-fit: contain;
   flex-shrink: 0;
 }
 
 /* 비밀번호 찾기 */
 .forgot-password {
-  margin-top: 30px;
+  margin-top: 1.875rem;
 
   color: var(--gray-500);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 /* 가입하기 카드 */
 .signup-card {
   width: 100%;
-  height: 86px;
-  margin-top: 10px;
+  height: 5.375rem;
+  margin-top: 0.625rem;
 
   background-color: var(--white);
-  border: 1px solid var(--gray-200);
+  border: 0.0625rem solid var(--gray-200);
 
   display: flex;
   justify-content: center;
@@ -245,7 +245,7 @@ input:focus-visible {
 
 .signup-card p {
   color: var(--gray-500);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
 }
 
@@ -256,15 +256,15 @@ input:focus-visible {
 
 /* 앱 다운로드 */
 .download-section {
-  margin-top: 17px;
+  margin-top: 1.0625rem;
   text-align: center;
 }
 
 .download-section p {
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 
   color: var(--gray-500);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -272,26 +272,22 @@ input:focus-visible {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-}
-
-.store-buttons a {
-  display: inline-flex;
+  gap: 0.625rem;
 }
 
 .store-buttons img {
-  height: 40px;
+  height: 2.5rem;
   object-fit: contain;
 }
 
-/* 스크린리더 전용 텍스트 */
+/* 스크린리더 */
 .sr-only {
   position: absolute;
 
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem;
 
   overflow: hidden;
   clip-path: inset(50%);
@@ -299,10 +295,10 @@ input:focus-visible {
   border: 0;
 }
 
-/* 태블릿 이하 */
-@media (max-width: 960px) {
+/* 태블릿 */
+@media (max-width: 60rem) {
   .login-page {
-    padding: 40px 20px;
+    padding: 2.5rem 1.25rem;
   }
 
   .mockup-section {
@@ -312,13 +308,12 @@ input:focus-visible {
   .auth-section,
   .login-card,
   .signup-card {
-    width: 100%;
-    max-width: 416px;
+    max-width: 26rem;
   }
 }
 
 /* 모바일 */
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   body {
     background-color: var(--white);
   }
@@ -328,39 +323,28 @@ input:focus-visible {
     align-items: stretch;
   }
 
-  .auth-section {
-    width: 100%;
-    max-width: none;
-  }
-
   .login-card {
-    width: 100%;
-    min-height: auto;
-
-    padding: 110px 20px 40px;
+    padding: 6.875rem 1.25rem 2.5rem;
     border: none;
   }
 
   .logo {
-    margin-bottom: 64px;
+    margin-bottom: 4rem;
   }
 
   .logo img {
-    width: 210px;
-    max-width: 70%;
+    width: 13.125rem;
   }
 
   .input-box,
   .login-button,
   .kakao-button {
-    width: 100%;
-    max-width: 340px;
+    max-width: 21.25rem;
   }
 
   .signup-card {
-    width: 100%;
     height: auto;
-    margin-top: 30px;
+    margin-top: 1.875rem;
     border: none;
   }
 
