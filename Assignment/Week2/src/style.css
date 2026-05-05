@@ -60,7 +60,7 @@ input:focus-visible {
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
   gap: clamp(3rem, 5vw, 4.5rem);
   padding: clamp(3rem, 9vh, 6rem) clamp(1.5rem, 5vw, 2.5rem);
@@ -297,17 +297,30 @@ input:focus-visible {
 
 /* 태블릿 */
 @media (max-width: 60rem) {
+
+  body {
+    background-color: var(--white);
+  }
+  
   .login-page {
-    padding: 2.5rem 1.25rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 2rem;
+    padding: 3rem 1.25rem;
   }
 
   .mockup-section {
-    display: none;
+    display: block;
+    width: min(80vw, 28rem);
+    height: min(115vw, 42rem);
   }
 
   .auth-section,
   .login-card,
   .signup-card {
+    width: 100%;
     max-width: 26rem;
   }
 }
@@ -319,13 +332,32 @@ input:focus-visible {
   }
 
   .login-page {
-    padding: 0;
-    align-items: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+
+    background-color: var(--gray-50);
+  }
+
+  .mockup-section {
+    display: block;
+    width: min(88vw, 22rem);
+    height: min(125vw, 33rem);
+  }
+
+  .auth-section {
+    width: 100%;
+    max-width: 26rem;
   }
 
   .login-card {
-    padding: 6.875rem 1.25rem 2.5rem;
-    border: none;
+    width: 100%;
+    min-height: auto;
+    padding: 4rem 1.25rem 2.5rem;
+    border: 0.0625rem solid var(--gray-200);
   }
 
   .logo {
@@ -339,16 +371,18 @@ input:focus-visible {
   .input-box,
   .login-button,
   .kakao-button {
+    width: 100%;
     max-width: 21.25rem;
   }
 
   .signup-card {
-    height: auto;
-    margin-top: 1.875rem;
-    border: none;
+    width: 100%;
+    height: 5.375rem;
+    margin-top: 0.625rem;
+    border: 0.0625rem solid var(--gray-200);
   }
 
   .download-section {
-    display: none;
+    display: block;
   }
 }
