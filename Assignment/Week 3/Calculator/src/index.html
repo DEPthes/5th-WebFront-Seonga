@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Calculator</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <main class="calculator-wrap">
+      <h1 class="calculator-title">Calculator</h1>
+      <section class="calculator" aria-label="계산기">
+        <div class="display-area">
+          <p class="formula" aria-live="polite"></p>
+          <p class="display" aria-live="polite">0</p>
+        </div>
+
+        <div class="buttons">
+          <button class="button clear" type="button" data-action="clear">AC</button>
+          <button class="button operator" type="button" data-operator="/">/</button>
+          <button class="button operator" type="button" data-operator="*">*</button>
+          <button class="button operator" type="button" data-operator="-">-</button>
+
+          <button class="button number" type="button" data-number="7">7</button>
+          <button class="button number" type="button" data-number="8">8</button>
+          <button class="button number" type="button" data-number="9">9</button>
+          <button class="button operator" type="button" data-operator="+">+</button>
+
+          <button class="button number" type="button" data-number="4">4</button>
+          <button class="button number" type="button" data-number="5">5</button>
+          <button class="button number" type="button" data-number="6">6</button>
+          <button class="button equal" type="button" data-action="calculate">=</button>
+
+          <button class="button number" type="button" data-number="1">1</button>
+          <button class="button number" type="button" data-number="2">2</button>
+          <button class="button number" type="button" data-number="3">3</button>
+
+          <button class="button number zero" type="button" data-number="0">0</button>
+          <button class="button decimal" type="button" data-action="decimal">.</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
