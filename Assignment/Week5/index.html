@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-icon">☁️</span>
+          <span class="sidebar-title">Weather</span>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">즐겨찾기</div>
+          <ul class="favorites-list" id="favoritesList">
+            <li class="nav-item empty-hint">도시를 즐겨찾기에 추가하세요</li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="footer-note">OpenWeatherMap API</div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="page-header">
+          <div class="breadcrumb">날씨 검색</div>
+          <h1 class="page-title">오늘의 날씨</h1>
+          <p class="page-desc">도시 이름을 입력해 현재 날씨를 확인하세요.</p>
+        </header>
+
+        <div class="search-block">
+          <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              id="cityInput"
+              class="search-input"
+              placeholder="도시 이름 입력 (예: 서울, 도쿄, 뉴욕)"
+              autocomplete="off"
+            />
+            <button class="search-btn" id="searchBtn">검색</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <section id="resultSection" class="result-section hidden">
+          <div class="result-header">
+            <div class="result-city-wrap">
+              <h2 class="result-city" id="resultCity"></h2>
+              <span class="result-country" id="resultCountry"></span>
+            </div>
+            <button class="fav-btn" id="favBtn" title="즐겨찾기 추가">☆</button>
+          </div>
+
+          <div class="weather-icon-wrap">
+            <img id="weatherIcon" src="" alt="날씨 아이콘" />
+            <span class="weather-desc" id="weatherDesc"></span>
+          </div>
+
+          <div class="temp-display">
+            <span class="temp-main" id="tempMain"></span>
+            <span class="temp-unit">°C</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="detail-grid">
+            <div class="detail-card">
+              <span class="detail-label">체감 온도</span>
+              <span class="detail-value" id="feelsLike"></span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">최저 / 최고</span>
+              <span class="detail-value" id="tempRange"></span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">습도</span>
+              <span class="detail-value" id="humidity"></span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">풍속</span>
+              <span class="detail-value" id="windSpeed"></span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">가시거리</span>
+              <span class="detail-value" id="visibility"></span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">기압</span>
+              <span class="detail-value" id="pressure"></span>
+            </div>
+          </div>
+
+          <div class="sun-row">
+            <div class="sun-item">
+              <span class="sun-label">🌅 일출</span>
+              <span class="sun-value" id="sunrise"></span>
+            </div>
+            <div class="sun-divider"></div>
+            <div class="sun-item">
+              <span class="sun-label">🌇 일몰</span>
+              <span class="sun-value" id="sunset"></span>
+            </div>
+          </div>
+
+          <div class="updated-at" id="updatedAt"></div>
+
+          <div class="divider"></div>
+
+          <!-- 5일 예보 -->
+          <div class="forecast-section">
+            <div class="forecast-title">5일 예보</div>
+            <div class="forecast-list" id="forecastList"></div>
+          </div>
+        </section>
+
+        <div id="loadingSection" class="loading-section hidden">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">날씨 정보를 불러오는 중...</p>
+        </div>
+
+        <div id="errorSection" class="error-section hidden">
+          <p class="error-icon">⚠️</p>
+          <p class="error-text" id="errorText"></p>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <p class="empty-icon">🌤️</p>
+          <p class="empty-text">검색하면 날씨 정보가 여기에 표시됩니다.</p>
+        </div>
+      </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

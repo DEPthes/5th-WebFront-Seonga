@@ -1,0 +1,6 @@
+# API keys (local only — never commit)
+Assignment/Week5/config.js
+
+# OS
+.DS_Store
+Thumbs.db
