@@ -1,24 +1,29 @@
+/* 모든 요소의 기본 margin·padding 제거, box-sizing을 border-box로 통일
+   border-box: padding과 border가 width/height 안에 포함되어 레이아웃 계산이 쉬워짐 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ── 디자인 토큰 (CSS 변수) ──
+   색상·그림자·반경·폰트를 한 곳에서 관리해 일관성을 유지한다.
+   값을 바꾸면 전체 UI에 즉시 반영된다. */
 :root {
-  --bg: #ffffff;
-  --sidebar-bg: #f7f7f5;
-  --border: #e9e9e7;
-  --text-primary: #37352f;
-  --text-secondary: #787774;
-  --text-tertiary: #acaba8;
-  --accent: #2eaadc;
-  --accent-light: #e8f4fb;
-  --hover-bg: #efefee;
-  --card-bg: #fbfbfa;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --radius: 6px;
-  --radius-lg: 10px;
+  --bg: #ffffff;              /* 메인 배경 */
+  --sidebar-bg: #f7f7f5;      /* 사이드바 배경 (살짝 회색빛) */
+  --border: #e9e9e7;          /* 구분선·테두리 색 */
+  --text-primary: #37352f;    /* 본문 주요 텍스트 */
+  --text-secondary: #787774;  /* 보조 텍스트 */
+  --text-tertiary: #acaba8;   /* 레이블·힌트 등 약한 텍스트 */
+  --accent: #2eaadc;          /* 포인트 색 (파랑) */
+  --accent-light: #e8f4fb;    /* 포인트 색 연한 버전 (포커스 링 등) */
+  --hover-bg: #efefee;        /* 호버 시 배경 */
+  --card-bg: #fbfbfa;         /* 카드 배경 (배경보다 살짝 어두움) */
+  --shadow-sm: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.06); /* 작은 그림자 */
+  --shadow-md: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);     /* 중간 그림자 */
+  --radius: 0.375rem;    /* 기본 둥근 모서리 (6px 기준) */
+  --radius-lg: 0.625rem; /* 카드용 큰 둥근 모서리 (10px 기준) */
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -27,70 +32,80 @@ body {
   background: var(--bg);
   color: var(--text-primary);
   height: 100vh;
+  /* 데스크톱: 사이드바·메인 각각 내부에서만 스크롤되도록 body 자체는 고정
+     모바일에서는 @media 블록에서 overflow:auto로 덮어씀 */
   overflow: hidden;
 }
 
+/* 사이드바 + 메인을 가로로 나란히 배치하는 최상위 Flex 컨테이너 */
 .container {
   display: flex;
   height: 100vh;
 }
 
-/* ── Sidebar ── */
+
+/* ════════════════════════════════
+   사이드바
+   ════════════════════════════════ */
 .sidebar {
-  width: 240px;
-  min-width: 240px;
+  width: 15rem;       /* 고정 너비 240px 기준 */
+  min-width: 15rem;   /* flex 축소 방지 */
   background: var(--sidebar-bg);
-  border-right: 1px solid var(--border);
+  border-right: 0.0625rem solid var(--border);
   display: flex;
-  flex-direction: column;
-  padding: 12px 8px;
+  flex-direction: column; /* 헤더·nav·푸터를 세로로 쌓음 */
+  padding: 0.75rem 0.5rem;
 }
 
+/* 사이드바 상단 앱 로고 영역 */
 .sidebar-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px 16px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 8px;
+  gap: 0.5rem;
+  padding: 0.375rem 0.5rem 1rem;
+  border-bottom: 0.0625rem solid var(--border);
+  margin-bottom: 0.5rem;
 }
 
 .sidebar-icon {
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .sidebar-title {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
 
+/* 즐겨찾기 목록을 감싸는 nav — flex:1로 남은 세로 공간 모두 차지 */
 .sidebar-nav {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* 목록이 길어지면 nav 내부에서만 스크롤 */
 }
 
+/* 섹션 레이블: "즐겨찾기" 같은 카테고리 제목 */
 .nav-section-label {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 500;
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 8px 8px 4px;
+  padding: 0.5rem 0.5rem 0.25rem;
 }
 
 .favorites-list {
   list-style: none;
 }
 
+/* 즐겨찾기 목록의 각 항목 */
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.5rem;
   border-radius: var(--radius);
-  font-size: 13.5px;
+  font-size: 0.84375rem;
   color: var(--text-secondary);
   cursor: pointer;
   transition: background 0.12s;
@@ -100,8 +115,9 @@ body {
   background: var(--hover-bg);
 }
 
+/* 즐겨찾기가 비었을 때 표시하는 안내 문구 — 클릭·호버 효과 없음 */
 .nav-item.empty-hint {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-tertiary);
   cursor: default;
   font-style: italic;
@@ -111,6 +127,7 @@ body {
   background: none;
 }
 
+/* 도시명: 남은 공간을 모두 차지하고 넘치면 말줄임표 처리 */
 .nav-item .nav-city {
   flex: 1;
   white-space: nowrap;
@@ -118,95 +135,107 @@ body {
   text-overflow: ellipsis;
 }
 
+/* ✕ 제거 버튼: 평소엔 투명, 항목 호버 시 나타남 */
 .nav-item .nav-remove {
   opacity: 0;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-tertiary);
   transition: opacity 0.12s;
   line-height: 1;
-  padding: 2px;
+  padding: 0.125rem;
 }
 
 .nav-item:hover .nav-remove {
   opacity: 1;
 }
 
+/* 사이드바 하단 API 출처 영역 */
 .sidebar-footer {
-  padding: 12px 8px 4px;
-  border-top: 1px solid var(--border);
+  padding: 0.75rem 0.5rem 0.25rem;
+  border-top: 0.0625rem solid var(--border);
 }
 
 .footer-note {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-tertiary);
 }
 
-/* ── Main ── */
+
+/* ════════════════════════════════
+   메인 콘텐츠
+   ════════════════════════════════ */
 .main {
-  flex: 1;
-  overflow-y: auto;
-  padding: 40px 60px 60px;
-  max-width: 720px;
+  flex: 1;           /* 사이드바 제외한 나머지 가로 공간 모두 차지 */
+  overflow-y: auto;  /* 콘텐츠가 길어지면 메인 영역 내부에서만 스크롤 */
+  padding: 2.5rem 3.75rem 3.75rem;
+  max-width: 45rem;  /* 가독성을 위해 최대 너비 제한 (720px 기준) */
 }
 
 .page-header {
-  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
 }
 
+/* 상단 경로 표시 ("날씨 검색") */
 .breadcrumb {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-tertiary);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .page-title {
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.03em; /* 큰 제목은 자간을 좁혀야 자연스럽게 보임 */
   line-height: 1.2;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .page-desc {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
-/* ── Search ── */
+
+/* ════════════════════════════════
+   검색창
+   ════════════════════════════════ */
 .search-block {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
+/* 아이콘·입력창·버튼을 하나의 테두리 박스처럼 보이게 묶는 래퍼 */
 .search-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
-  border: 1.5px solid var(--border);
+  gap: 0.5rem;
+  border: 0.09375rem solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 10px 14px;
+  padding: 0.625rem 0.875rem;
   background: var(--bg);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
+/* 입력창에 포커스가 생기면 래퍼 전체에 파란 테두리·링 적용
+   :focus-within: 자식 요소가 포커스를 받을 때 부모에 스타일 적용 */
 .search-wrapper:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-light);
+  box-shadow: 0 0 0 0.1875rem var(--accent-light);
 }
 
 .search-icon {
-  font-size: 15px;
-  flex-shrink: 0;
+  font-size: 0.9375rem;
+  flex-shrink: 0; /* Flex 줄어들지 않도록 고정 */
 }
 
 .search-input {
-  flex: 1;
+  flex: 1; /* 남은 가로 공간 모두 차지 */
   border: none;
   outline: none;
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-primary);
-  background: transparent;
+  background: transparent; /* 래퍼의 배경색을 그대로 보여줌 */
 }
 
 .search-input::placeholder {
@@ -215,13 +244,13 @@ body {
 
 .search-btn {
   flex-shrink: 0;
-  padding: 5px 14px;
-  background: var(--text-primary);
+  padding: 0.3125rem 0.875rem;
+  background: var(--text-primary); /* 다크 버튼 */
   color: #fff;
   border: none;
   border-radius: var(--radius);
   font-family: var(--font);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   transition: opacity 0.15s;
@@ -231,104 +260,127 @@ body {
   opacity: 0.8;
 }
 
-/* ── Divider ── */
+
+/* ════════════════════════════════
+   구분선
+   ════════════════════════════════ */
 .divider {
-  height: 1px;
+  height: 0.0625rem; /* 1px 얇은 가로선 */
   background: var(--border);
-  margin: 24px 0;
+  margin: 1.5rem 0;
 }
 
-/* ── States ── */
+
+/* ════════════════════════════════
+   상태 섹션 (로딩·오류·초기화면)
+   ════════════════════════════════ */
+
+/* 결과·로딩·오류·초기화면 중 하나만 표시됨
+   .hidden 클래스를 추가/제거해 app.js가 섹션을 전환한다 */
 .hidden {
-  display: none !important;
+  display: none !important; /* !important: JS로 인라인 스타일 덮어씌워도 무조건 숨김 */
 }
 
+/* 세 상태 섹션 공통: 가운데 정렬, 위아래 여백 */
 .empty-state,
 .loading-section,
 .error-section {
   text-align: center;
-  padding: 48px 0;
+  padding: 3rem 0;
 }
 
+/* 이모지 아이콘 (🌤️, ⚠️) */
 .empty-icon,
 .error-icon {
-  font-size: 36px;
-  margin-bottom: 12px;
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .empty-text {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-tertiary);
 }
 
 .error-text {
-  font-size: 14px;
-  color: #e03e3e;
+  font-size: 0.875rem;
+  color: #e03e3e; /* 오류는 빨간색으로 강조 */
 }
 
+/* CSS만으로 구현한 원형 스피너
+   border-top만 색을 바꿔 회전하면 호 모양처럼 보임 */
 .loading-spinner {
-  width: 28px;
-  height: 28px;
-  border: 2.5px solid var(--border);
-  border-top-color: var(--accent);
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0.15625rem solid var(--border);      /* 전체 테두리: 연한 색 */
+  border-top-color: var(--accent);             /* 위쪽 테두리만 파란색 → 회전 시 호처럼 보임 */
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
-  margin: 0 auto 12px;
+  margin: 0 auto 0.75rem;
 }
 
 .loading-text {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
+/* 스피너 360도 회전 애니메이션 */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* ── Result ── */
+
+/* ════════════════════════════════
+   날씨 결과 섹션
+   ════════════════════════════════ */
+
+/* 결과가 나타날 때 아래에서 위로 살짝 올라오는 페이드인 효과 */
 .result-section {
   animation: fadeIn 0.25s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(0.375rem); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* 도시명 + 즐겨찾기 버튼을 양끝 배치 */
 .result-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
+/* 도시명과 국가 코드를 베이스라인 기준으로 나란히 배치 */
 .result-city-wrap {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .result-city {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
+/* 국가 코드 배지 (예: "KR") — pill 모양 */
 .result-country {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-tertiary);
   background: var(--hover-bg);
-  padding: 2px 8px;
-  border-radius: 99px;
+  padding: 0.125rem 0.5rem;
+  border-radius: 6.1875rem; /* 충분히 큰 값으로 pill 모양 유지 */
 }
 
+/* ★/☆ 즐겨찾기 토글 버튼 */
 .fav-btn {
   background: none;
-  border: 1.5px solid var(--border);
+  border: 0.09375rem solid var(--border);
   border-radius: var(--radius);
-  padding: 4px 10px;
-  font-size: 16px;
+  padding: 0.25rem 0.625rem;
+  font-size: 1rem;
   cursor: pointer;
   color: var(--text-secondary);
   transition: all 0.15s;
@@ -339,218 +391,259 @@ body {
   background: var(--hover-bg);
 }
 
+/* 즐겨찾기 등록 상태: 별·테두리·배경 모두 노란색 계열로 변경 */
 .fav-btn.active {
   color: #f5a623;
   border-color: #f5a623;
   background: #fff9ee;
 }
 
-.weather-icon-wrap {
+/* 날씨 아이콘 + 설명 텍스트 가로 배치 */
+.weather-summary {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 0.625rem;
+  margin-bottom: 0.5rem;
 }
 
+.weather-icon-wrap {
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* OpenWeatherMap에서 받은 날씨 아이콘 이미지 크기 */
 .weather-icon-wrap img {
-  width: 52px;
-  height: 52px;
+  width: 3.25rem;
+  height: 3.25rem;
 }
 
 .weather-desc {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-secondary);
   font-weight: 400;
-  text-transform: capitalize;
+  text-transform: capitalize; /* API 응답이 소문자일 때 첫 글자 대문자로 */
 }
 
+/* 숫자·단위(°C)를 베이스라인 상단 기준으로 나란히 배치 */
 .temp-display {
   display: flex;
   align-items: flex-start;
-  gap: 2px;
-  margin-bottom: 4px;
+  gap: 0.125rem;
+  margin-bottom: 0.25rem;
 }
 
+/* 메인 온도 숫자 — 크고 굵게 */
 .temp-main {
-  font-size: 72px;
+  font-size: 4.5rem;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.04em; /* 큰 숫자는 자간을 좁혀야 밀도감이 생김 */
   line-height: 1;
   color: var(--text-primary);
 }
 
+/* °C 단위 — 온도 숫자보다 작고, 상단을 약간 내려 시각적 균형 맞춤 */
 .temp-unit {
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 400;
   color: var(--text-secondary);
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
-/* ── Detail Grid ── */
+
+/* ════════════════════════════════
+   세부 기상 정보 그리드
+   ════════════════════════════════ */
+
+/* 3열 그리드: 체감 온도·최저/최고·습도·풍속·가시거리·기압 */
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 0.625rem;
+  margin-bottom: 0.75rem;
 }
 
 .detail-card {
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
+  padding: 0.875rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
+/* 카드 레이블 (예: "체감 온도") — 작고 흐리게 */
 .detail-label {
-  font-size: 11.5px;
+  font-size: 0.71875rem;
   font-weight: 500;
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
+/* 카드 값 (예: "30°C") — 크고 굵게 */
 .detail-value {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
 
-/* ── Sun Row ── */
+
+/* ════════════════════════════════
+   일출·일몰 행
+   ════════════════════════════════ */
+
+/* 일출·일몰을 좌우로 나란히 배치, 가운데에 구분선 */
 .sun-row {
   display: flex;
   align-items: center;
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 14px 20px;
-  margin-bottom: 12px;
+  padding: 0.875rem 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
+/* 일출 또는 일몰 각각의 레이블+값 묶음 */
 .sun-item {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
+/* 일몰 항목은 오른쪽 정렬로 배치 */
 .sun-item:last-child {
   align-items: flex-end;
 }
 
 .sun-label {
-  font-size: 11.5px;
+  font-size: 0.71875rem;
   color: var(--text-tertiary);
   font-weight: 500;
 }
 
 .sun-value {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
+/* 일출·일몰 사이의 세로 구분선 */
 .sun-divider {
-  width: 1px;
-  height: 36px;
+  width: 0.0625rem;
+  height: 2.25rem;
   background: var(--border);
-  margin: 0 20px;
+  margin: 0 1.25rem;
 }
 
-/* ── Updated ── */
+
+/* ════════════════════════════════
+   마지막 업데이트 시각
+   ════════════════════════════════ */
 .updated-at {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-tertiary);
   text-align: right;
 }
 
-/* ── Forecast ── */
+
+/* ════════════════════════════════
+   5일 예보
+   ════════════════════════════════ */
 .forecast-section {
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
+/* "5일 예보" 섹션 제목 */
 .forecast-title {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
+/* 날짜별 카드를 세로로 쌓는 컨테이너 */
 .forecast-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
+/* 하루 예보 카드: 헤더(요약) + 슬롯 바(3시간 단위) */
 .forecast-day {
-  border: 1px solid var(--border);
+  border: 0.0625rem solid var(--border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow: hidden; /* 슬롯 바가 카드 모서리 밖으로 나가지 않도록 */
   background: var(--card-bg);
 }
 
+/* 카드 헤더: 요일·요약 아이콘·최저/최고 온도 가로 배치 */
 .forecast-day-header {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  gap: 12px;
+  padding: 0.75rem 1rem;
+  gap: 0.75rem;
   cursor: pointer;
-  user-select: none;
+  user-select: none; /* 클릭 시 텍스트 선택 방지 */
 }
 
 .forecast-day-header:hover {
   background: var(--hover-bg);
 }
 
+/* 요일명 + 날짜(MM/DD)를 세로로 쌓는 열 */
 .forecast-day-label {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 56px;
+  gap: 0.125rem;
+  min-width: 3.5rem; /* 최소 너비 고정으로 정렬 일치 */
 }
 
 .forecast-dow {
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .forecast-date {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-tertiary);
 }
 
+/* 대표 날씨 아이콘 + 설명 텍스트 — flex:1로 남은 공간 차지 */
 .forecast-day-summary {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
   flex: 1;
 }
 
+/* 대표 날씨 아이콘 크기 (세부 카드보다 약간 작음) */
 .forecast-day-summary img {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
 }
 
 .forecast-desc {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-secondary);
   text-transform: capitalize;
 }
 
+/* 최저/최고 온도 표시 */
 .forecast-range {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
+  gap: 0.25rem;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 
+/* 최저 온도는 파란색 (--accent) */
 .forecast-min {
   color: var(--accent);
 }
@@ -560,70 +653,252 @@ body {
   font-weight: 300;
 }
 
+/* 최고 온도는 빨간색 */
 .forecast-max {
   color: #e03e3e;
 }
 
-/* 3시간 슬롯 바 */
+
+/* ════════════════════════════════
+   3시간 슬롯 바
+   ════════════════════════════════ */
+
+/* 슬롯들을 가로로 나열; 칸이 많으면 가로 스크롤
+   scrollbar-width: none으로 스크롤바 UI 숨김 */
 .slot-list {
   display: flex;
   overflow-x: auto;
-  border-top: 1px solid var(--border);
+  border-top: 0.0625rem solid var(--border);
   scrollbar-width: none;
-  padding: 0 4px;
+  padding: 0 0.25rem;
 }
 
+/* Webkit 브라우저(Chrome·Safari)에서 스크롤바 숨김 */
 .slot-list::-webkit-scrollbar {
   display: none;
 }
 
+/* 시각·아이콘·기온을 세로로 쌓는 단일 슬롯 */
 .slot {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 10px;
-  gap: 2px;
-  min-width: 60px;
-  border-right: 1px solid var(--border);
-  flex-shrink: 0;
+  padding: 0.5rem 0.625rem;
+  gap: 0.125rem;
+  min-width: 3.75rem;              /* 슬롯 최소 너비 고정 */
+  border-right: 0.0625rem solid var(--border); /* 슬롯 간 구분선 */
+  flex-shrink: 0;                 /* 슬롯이 줄어들지 않고 스크롤로 처리 */
 }
 
+/* 마지막 슬롯은 오른쪽 구분선 제거 */
 .slot:last-child {
   border-right: none;
 }
 
+/* HH:MM 형식의 시각 */
 .slot-time {
-  font-size: 10.5px;
+  font-size: 0.65625rem;
   color: var(--text-tertiary);
   font-weight: 500;
 }
 
+/* 슬롯 날씨 아이콘 (1배 해상도, 예보 헤더보다 작음) */
 .slot-icon {
-  width: 28px;
-  height: 28px;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
+/* 해당 시각의 기온 */
 .slot-temp {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-/* ── Responsive ── */
-@media (max-width: 768px) {
+
+/* ════════════════════════════════
+   반응형 레이아웃
+   ════════════════════════════════ */
+
+/* 모바일 드로어 열릴 때 배경을 덮는 반투명 오버레이
+   .active 클래스가 붙으면 display:block으로 전환,
+   클릭하면 app.js closeSidebar()가 드로어를 닫는다 */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;              /* top/right/bottom/left: 0 한번에 설정 */
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 10;           /* 사이드바(z-index:20)보다 아래, 일반 콘텐츠보다 위 */
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* 즐겨찾기 드로어 토글 버튼 — 데스크톱에서는 숨김 */
+.menu-toggle {
+  display: none;
+}
+
+
+/* ── 태블릿 (화면 너비 ≤ 48rem / 768px) ── */
+@media (max-width: 48rem) {
+  /* 데스크톱은 body가 overflow:hidden이지만
+     모바일은 콘텐츠가 뷰포트보다 길 수 있으므로 스크롤 허용 */
+  body {
+    overflow: auto;
+    height: auto;
+  }
+
+  /* body 높이가 auto가 되므로 container도 auto로 맞춤 */
+  .container {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  /* 사이드바를 화면 왼쪽 밖에 숨겨두고
+     .open 클래스 추가 시 translateX(0)으로 슬라이드인 */
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 20;           /* 오버레이(10)보다 위에 올라오도록 */
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 0.25rem 0 1.25rem rgba(0, 0, 0, 0.15); /* 드로어 오른쪽 그림자 */
   }
 
   .main {
-    padding: 28px 24px 48px;
+    padding: 1.25rem 1.5rem 3rem;
+    max-width: 100%; /* 사이드바가 없어지므로 전체 너비 사용 */
   }
 
-  .detail-grid {
-    grid-template-columns: repeat(2, 1fr);
+  /* 모바일에서만 표시되는 즐겨찾기 토글 버튼 */
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 1.25rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--card-bg);
+    border: 0.09375rem solid var(--border);
+    border-radius: var(--radius);
+    font-family: var(--font);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+
+  .menu-toggle:hover {
+    background: var(--hover-bg);
+  }
+
+  .page-title {
+    font-size: 1.625rem;
   }
 
   .temp-main {
-    font-size: 56px;
+    font-size: 3.5rem;
+  }
+
+  /* 3열 → 2열로 줄여 좁은 화면에서 카드가 너무 작아지지 않도록 */
+  .detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ── 모바일 (화면 너비 ≤ 30rem / 480px) ── */
+@media (max-width: 30rem) {
+  .main {
+    padding: 1rem 1rem 2.5rem;
+  }
+
+  .page-title {
+    font-size: 1.375rem;
+  }
+
+  .temp-main {
+    font-size: 3rem;
+  }
+
+  .temp-unit {
+    font-size: 1.375rem;
+    margin-top: 0.5rem;
+  }
+
+  .detail-grid {
+    gap: 0.5rem;
+  }
+
+  .detail-card {
+    padding: 0.75rem 0.875rem;
+  }
+
+  .detail-value {
+    font-size: 0.875rem;
+  }
+
+  .sun-row {
+    padding: 0.75rem 1rem;
+  }
+
+  .forecast-day-header {
+    padding: 0.625rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .forecast-day-label {
+    min-width: 3rem;
+  }
+
+  .slot {
+    min-width: 3.25rem;
+    padding: 0.375rem 0.5rem;
+  }
+}
+
+
+/* ── 소형 모바일 (화면 너비 ≤ 22.5rem / 360px) ── */
+@media (max-width: 22.5rem) {
+  .main {
+    padding: 0.875rem 0.75rem 2.25rem;
+  }
+
+  .temp-main {
+    font-size: 2.5rem;
+  }
+
+  .temp-unit {
+    font-size: 1.125rem;
+  }
+
+  /* 가장 좁은 화면에서도 2열 유지, gap만 최소화 */
+  .detail-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.375rem;
+  }
+
+  .result-city {
+    font-size: 1.125rem;
+  }
+
+  .search-wrapper {
+    padding: 0.5rem 0.625rem;
+  }
+
+  .forecast-day-summary {
+    gap: 0.125rem;
+  }
+
+  .forecast-desc {
+    font-size: 0.75rem;
   }
 }

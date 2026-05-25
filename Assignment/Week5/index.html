@@ -2,10 +2,15 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <!-- viewport: 모바일 브라우저가 화면 너비에 맞춰 렌더링하도록 지정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather</title>
+
+    <!-- Google Fonts 연결 최적화:
+         preconnect로 DNS 조회·TCP 핸드셰이크를 미리 처리해 폰트 로드 지연을 줄임 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Inter 폰트: 300(라이트)·400(레귤러)·500(미디엄)·600(세미볼드)·700(볼드) 굵기만 요청 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -13,31 +18,61 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- 전체 레이아웃: 사이드바(240px) + 메인 콘텐츠(flex:1) -->
     <div class="container">
+
+      <!-- ── 모바일 오버레이 ──
+           사이드바 드로어가 열릴 때 배경을 어둡게 덮는 반투명 레이어.
+           .active 클래스가 붙으면 display:block으로 전환되며,
+           클릭하면 app.js에서 드로어를 닫는다. -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- ── 사이드바 ──
+           데스크톱: 좌측 고정 패널로 항상 표시.
+           모바일(≤768px): 화면 밖에 숨겨두고 .open 클래스로 슬라이드인. -->
       <aside class="sidebar">
+
+        <!-- 사이드바 상단: 앱 이름 표시 -->
         <div class="sidebar-header">
           <span class="sidebar-icon">☁️</span>
           <span class="sidebar-title">Weather</span>
         </div>
+
+        <!-- 즐겨찾기 목록 내비게이션
+             ul#favoritesList는 app.js의 renderFavorites()가 동적으로 채운다.
+             초기값은 빈 상태 안내 문구 -->
         <nav class="sidebar-nav">
           <div class="nav-section-label">즐겨찾기</div>
           <ul class="favorites-list" id="favoritesList">
             <li class="nav-item empty-hint">도시를 즐겨찾기에 추가하세요</li>
           </ul>
         </nav>
+
+        <!-- 사이드바 하단: API 출처 표기 -->
         <div class="sidebar-footer">
           <div class="footer-note">OpenWeatherMap API</div>
         </div>
       </aside>
 
+      <!-- ── 메인 콘텐츠 영역 ── -->
       <main class="main">
+
+        <!-- 모바일 전용 즐겨찾기 드로어 토글 버튼.
+             데스크톱(>768px)에서는 display:none으로 숨겨지고,
+             모바일에서만 표시되어 사이드바 드로어를 열고 닫는다. -->
+        <button class="menu-toggle" id="menuToggle">☰ 즐겨찾기</button>
+
+        <!-- 페이지 헤더: 제목과 설명 -->
         <header class="page-header">
           <div class="breadcrumb">날씨 검색</div>
           <h1 class="page-title">오늘의 날씨</h1>
           <p class="page-desc">도시 이름을 입력해 현재 날씨를 확인하세요.</p>
         </header>
 
+        <!-- ── 검색 영역 ── -->
         <div class="search-block">
+          <!-- search-wrapper: 아이콘·입력창·버튼을 하나의 박스처럼 보이게 묶음.
+               :focus-within으로 입력창에 포커스가 생기면 테두리 색이 바뀐다. -->
           <div class="search-wrapper">
             <span class="search-icon">🔍</span>
             <input
@@ -47,26 +82,42 @@
               placeholder="도시 이름 입력 (예: 서울, 도쿄, 뉴욕)"
               autocomplete="off"
             />
+            <!-- 검색 버튼: 클릭 시 app.js handleSearch() 실행 -->
             <button class="search-btn" id="searchBtn">검색</button>
           </div>
         </div>
 
         <div class="divider"></div>
 
+        <!-- ── 날씨 결과 섹션 ──
+             초기에는 .hidden으로 숨겨져 있다가, 검색 성공 시 app.js가 .hidden을 제거해 표시.
+             나머지 세 섹션(loading·error·empty)과 하나씩 번갈아 표시된다. -->
         <section id="resultSection" class="result-section hidden">
+
+          <!-- 도시명 + 즐겨찾기 토글 버튼 -->
           <div class="result-header">
             <div class="result-city-wrap">
+              <!-- app.js renderWeather()가 data.name, data.sys.country를 채움 -->
               <h2 class="result-city" id="resultCity"></h2>
               <span class="result-country" id="resultCountry"></span>
             </div>
+            <!-- ★/☆ 버튼: 클릭 시 toggleFavorite() 실행.
+                 즐겨찾기 등록 여부에 따라 .active 클래스가 붙어 색이 바뀐다. -->
             <button class="fav-btn" id="favBtn" title="즐겨찾기 추가">☆</button>
           </div>
 
-          <div class="weather-icon-wrap">
-            <img id="weatherIcon" src="" alt="날씨 아이콘" />
+          <!-- 날씨 아이콘 원형 배경 + 설명 텍스트
+               weather-summary: 원(icon-wrap)과 텍스트를 가로로 나란히 배치하는 행 컨테이너
+               weather-icon-wrap: data-condition 속성 값에 따라 날씨별 배경색·테두리가 CSS로 적용됨
+               아이콘 src는 OpenWeatherMap CDN에서 코드(@2x = 고해상도)로 조합 -->
+          <div class="weather-summary">
+            <div class="weather-icon-wrap">
+              <img id="weatherIcon" src="" alt="날씨 아이콘" />
+            </div>
             <span class="weather-desc" id="weatherDesc"></span>
           </div>
 
+          <!-- 메인 온도 표시 (72px 대형 숫자) -->
           <div class="temp-display">
             <span class="temp-main" id="tempMain"></span>
             <span class="temp-unit">°C</span>
@@ -74,13 +125,17 @@
 
           <div class="divider"></div>
 
+          <!-- ── 세부 기상 정보 그리드 (3열) ──
+               각 카드의 값은 app.js renderWeather()가 동적으로 채운다. -->
           <div class="detail-grid">
             <div class="detail-card">
               <span class="detail-label">체감 온도</span>
+              <!-- feels_like: 바람·습도를 반영한 체감 기온 -->
               <span class="detail-value" id="feelsLike"></span>
             </div>
             <div class="detail-card">
               <span class="detail-label">최저 / 최고</span>
+              <!-- temp_min / temp_max: 현재 관측 시점의 최저·최고 (예보가 아님) -->
               <span class="detail-value" id="tempRange"></span>
             </div>
             <div class="detail-card">
@@ -93,6 +148,7 @@
             </div>
             <div class="detail-card">
               <span class="detail-label">가시거리</span>
+              <!-- visibility: API가 미터(m) 단위로 반환 → app.js에서 km로 변환 -->
               <span class="detail-value" id="visibility"></span>
             </div>
             <div class="detail-card">
@@ -101,6 +157,8 @@
             </div>
           </div>
 
+          <!-- ── 일출·일몰 시각 ──
+               app.js의 toLocalTime()이 Unix 타임스탬프를 해당 도시 현지 시각으로 변환 -->
           <div class="sun-row">
             <div class="sun-item">
               <span class="sun-label">🌅 일출</span>
@@ -113,27 +171,37 @@
             </div>
           </div>
 
+          <!-- 마지막 API 호출 시각 (한국어 HH:MM 형식) -->
           <div class="updated-at" id="updatedAt"></div>
 
           <div class="divider"></div>
 
-          <!-- 5일 예보 -->
+          <!-- ── 5일 예보 ──
+               app.js renderForecast()가 /forecast API의 3시간 간격 슬롯을
+               날짜별로 묶어 카드 형태로 동적 생성해 이 div 안에 삽입한다. -->
           <div class="forecast-section">
             <div class="forecast-title">5일 예보</div>
             <div class="forecast-list" id="forecastList"></div>
           </div>
         </section>
 
+        <!-- ── 로딩 섹션 ──
+             API 요청 중에만 표시되며, 요청 완료 후 결과 또는 오류 섹션으로 교체된다. -->
         <div id="loadingSection" class="loading-section hidden">
           <div class="loading-spinner"></div>
           <p class="loading-text">날씨 정보를 불러오는 중...</p>
         </div>
 
+        <!-- ── 오류 섹션 ──
+             geocode 실패(도시 없음), HTTP 오류(401 등) 시 표시.
+             #errorText는 app.js showError()가 오류 메시지를 채운다. -->
         <div id="errorSection" class="error-section hidden">
           <p class="error-icon">⚠️</p>
           <p class="error-text" id="errorText"></p>
         </div>
 
+        <!-- ── 초기 안내 화면 ──
+             페이지 첫 로드 시 기본으로 표시. 검색이 시작되면 다른 섹션으로 교체된다. -->
         <div id="emptyState" class="empty-state">
           <p class="empty-icon">🌤️</p>
           <p class="empty-text">검색하면 날씨 정보가 여기에 표시됩니다.</p>
@@ -141,6 +209,8 @@
       </main>
     </div>
 
+    <!-- config.js를 먼저 로드해 CONFIG.API_KEY를 전역에 노출한 뒤 app.js를 로드.
+         app.js 첫 줄에서 CONFIG.API_KEY를 읽으므로 순서가 바뀌면 오류 발생. -->
     <script src="config.js"></script>
     <script src="app.js"></script>
   </body>
