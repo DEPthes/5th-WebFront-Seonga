@@ -40,8 +40,8 @@ let favorites = JSON.parse(localStorage.getItem('weather_favorites') || '[]');
  */
 async function geocode(city) {
   const res = await fetch(
-    // limit=1: 가장 일치하는 결과 하나만 요청
-    `${GEO_URL}?q=${encodeURIComponent(city)}&limit=1&appid=${API_KEY}`
+    // limit=5: 여러 후보를 받아 가장 정확히 일치하는 도시를 직접 선택
+    `${GEO_URL}?q=${encodeURIComponent(city)}&limit=5&appid=${API_KEY}`
   );
   if (!res.ok) throwApiError(res.status);
   const results = await res.json();
@@ -49,11 +49,23 @@ async function geocode(city) {
   // 검색 결과가 없으면 사용자에게 친절한 메시지 표시
   if (results.length === 0) throw new Error('도시를 찾을 수 없습니다. 다른 이름으로 검색해보세요.');
 
+  const q = city.trim().toLowerCase();
+
+  // 1순위: 영문 name 정확 일치 (예: "osaka" → "Osaka")
+  // 2순위: 한국어 local_names.ko 정확 일치 (예: "오사카" → "오사카")
+  // 3순위: 영문 local_names.en 정확 일치
+  // 4순위: 첫 번째 결과로 폴백
+  const match =
+    results.find((r) => r.name.toLowerCase() === q) ||
+    results.find((r) => r.local_names?.ko === city.trim()) ||
+    results.find((r) => r.local_names?.en?.toLowerCase() === q) ||
+    results[0];
+
   return {
-    lat: results[0].lat,
-    lon: results[0].lon,
+    lat: match.lat,
+    lon: match.lon,
     // local_names.ko가 있으면 한국어 표기를 우선 사용, 없으면 영어명 사용
-    name: results[0].local_names?.ko || results[0].name,
+    name: match.local_names?.ko || match.name,
   };
 }
 
