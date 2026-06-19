@@ -1,0 +1,55 @@
+/*
+ * Display 스타일
+ *
+ * 레이아웃: Calculator 내에서 flex: 1로 남은 공간을 차지하며
+ *           숫자를 오른쪽 하단에 정렬한다 (iOS 계산기 스타일)
+ */
+
+.display {
+  flex: 1;                    /* Calculator의 세로 남은 공간을 모두 차지 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;  /* 수식·숫자를 하단 정렬 */
+  align-items: flex-end;      /* 우측 정렬 */
+  padding: 0 0.5rem 1.25rem;
+  gap: 0.25rem;               /* 수식 줄과 숫자 줄 사이 간격 */
+  min-height: 10rem;          /* 버튼 영역이 커져도 최소 디스플레이 높이 보장 */
+}
+
+/* 상단 수식 텍스트 (예: "3 +") — 반투명 흰색 */
+.formula {
+  color: var(--text-formula); /* rgba(255,255,255,0.5) */
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.4;
+  word-break: break-all;      /* 긴 수식이 넘칠 때 줄바꿈 */
+  text-align: right;
+}
+
+/* 현재 숫자 공통 스타일 */
+.current {
+  width: 100%;
+  color: var(--text-display);
+  font-weight: 200;
+  line-height: 1;
+  text-align: right;
+  word-break: break-all;
+  transition: font-size 100ms ease; /* 자릿수 변화 시 부드러운 크기 전환 */
+  letter-spacing: -0.02em;          /* 자간을 좁혀 숫자가 더 촘촘하게 */
+}
+
+/*
+ * 자릿수별 글자 크기 — clamp(최솟값, 선호값, 최댓값)
+ * 선호값(vw)이 뷰포트 너비에 비례하므로 작은 화면에서도 넘치지 않는다
+ */
+.large  { font-size: clamp(4.5rem,  22vw, 7rem);   } /* 1~4자리 */
+.medium { font-size: clamp(3.5rem,  17vw, 5.5rem); } /* 5~6자리 */
+.small  { font-size: clamp(2.75rem, 13vw, 4.25rem);} /* 7~9자리 */
+.tiny   { font-size: clamp(2rem,    10vw, 3.25rem);} /* 10자리 이상 */
+
+/* Error 상태 — 고정 크기 + 빨간 색상 */
+.error {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #ff453a; /* iOS 시스템 레드 */
+}

@@ -1,0 +1,14 @@
+/*
+ * ButtonGrid 레이아웃 스타일
+ *
+ * CSS Grid 4열 구성:
+ *  - repeat(4, 1fr): 4개 열이 동일한 너비를 가짐
+ *  - 버튼(Button)이 width: 100% + aspect-ratio: 1/1이므로
+ *    열 너비가 곧 버튼의 지름이 된다 → 완벽한 원형 버튼
+ *  - gap: 버튼 사이의 간격 (0.8125rem ≈ 13px)
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8125rem;
+}

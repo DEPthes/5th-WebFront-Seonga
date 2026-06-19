@@ -1,0 +1,27 @@
+/*
+ * App 레이아웃 스타일
+ *
+ * 역할: 페이지 전체 배경 + Calculator를 화면 중앙에 배치
+ *
+ * 모바일 (기본):
+ *  - Calculator가 화면 상단에 붙어서 풀스크린으로 펼쳐진다
+ *  - align-items: flex-start → Calculator를 상단에 고정
+ *
+ * 데스크탑 (≥640px):
+ *  - align-items: center → Calculator를 수직 중앙 정렬 (카드 형태)
+ */
+
+.app {
+  min-height: 100vh;
+  background: var(--bg);      /* global.css :root 변수 (#000) */
+  display: flex;
+  align-items: flex-start;    /* 모바일: 상단 정렬 */
+  justify-content: center;    /* 수평 중앙 정렬 */
+}
+
+/* 데스크탑: Calculator를 화면 정중앙에 배치 */
+@media (min-width: 40rem) {
+  .app {
+    align-items: center;
+  }
+}

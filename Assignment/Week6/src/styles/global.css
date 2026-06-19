@@ -1,0 +1,56 @@
+/*
+ * 전역(Global) 스타일
+ *
+ * 역할:
+ *  1. CSS 초기화 (박스 모델, margin/padding 리셋)
+ *  2. 디자인 토큰 정의 (:root CSS 변수)
+ *  3. body 기본 설정 (폰트, 배경색)
+ *  4. button 공통 초기화
+ *
+ * 이 파일은 main.jsx에서 컴포넌트보다 먼저 import되어
+ * 모든 컴포넌트에 전역으로 적용된다.
+ */
+
+/* Google Fonts에서 SF Pro Display(숫자용)와 Inter(UI용) 로드 */
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@200;300;400;500&family=Inter:wght@400;500&display=swap');
+
+/* ── 박스 모델 초기화 ─────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* 패딩·테두리를 너비에 포함 (직관적인 레이아웃) */
+  margin: 0;
+  padding: 0;
+}
+
+/* ── 디자인 토큰 (CSS 사용자 정의 속성) ─────────
+   컴포넌트 파일에서 var(--변수명)으로 참조한다.
+   한 곳에서 색상을 관리하면 테마 변경이 쉽다.
+ ──────────────────────────────────────────────── */
+:root {
+  --bg: #000000;                        /* 페이지·계산기 배경 (순수 검정) */
+  --btn-number: #333333;                /* 숫자 버튼 배경 (짙은 회색) */
+  --btn-utility: #a5a5a5;              /* 유틸리티 버튼 배경 (밝은 회색) */
+  --btn-operator: #ff9500;             /* 연산자 버튼 배경 (주황) */
+  --text-white: #ffffff;               /* 기본 텍스트 (숫자·연산자 버튼) */
+  --text-black: #000000;               /* 유틸리티 버튼 텍스트 */
+  --text-display: #ffffff;             /* 디스플레이 숫자 색상 */
+  --text-formula: rgba(255, 255, 255, 0.5); /* 수식 텍스트 (반투명 흰색) */
+}
+
+/* ── body 기본 설정 ───────────────────────────── */
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  /* 시스템 폰트 폴백 체인: Inter → Apple 시스템폰트 → Segoe 계열 → sans-serif */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* macOS / iOS에서 폰트 가장자리를 부드럽게 렌더링 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── button 초기화 ────────────────────────────── */
+button {
+  font-family: inherit; /* 부모의 폰트를 상속 (브라우저 기본값 override) */
+  border: none;
+  cursor: pointer;
+}

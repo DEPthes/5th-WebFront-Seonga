@@ -1,0 +1,26 @@
+/*
+ * Calculator 레이아웃 스타일
+ *
+ * 모바일: 화면 전체를 세로로 꽉 채우는 풀스크린 레이아웃
+ * 데스크탑(≥40rem): 최대 너비 26rem의 카드 형태로 전환
+ */
+
+.calculator {
+  width: 100%;
+  max-width: 26rem;           /* 계산기 최대 너비 (iOS 비율 참고) */
+  min-height: 100svh;         /* 모바일: 주소창 포함 뷰포트 전체 높이 (svh = small viewport height) */
+  display: flex;
+  flex-direction: column;     /* Display(위) + ButtonGrid(아래) 수직 배치 */
+  /* 상단 여백(5rem): 상태바 영역 확보 / 좌우(0.875rem): 버튼과 화면 가장자리 간격 */
+  padding: 5rem 0.875rem 1.5rem;
+}
+
+/* 데스크탑: 카드 형태 (테두리 + 둥근 모서리) */
+@media (min-width: 40rem) {
+  .calculator {
+    min-height: auto;                               /* 풀스크린 해제 */
+    padding: 2.5rem 0.875rem 1.5rem;                /* 상단 여백 축소 */
+    border-radius: 2rem;                            /* 모서리 둥글게 */
+    border: 1px solid rgba(255, 255, 255, 0.08);    /* 배경과 구분하는 은은한 테두리 */
+  }
+}
