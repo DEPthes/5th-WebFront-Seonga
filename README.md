@@ -15,3 +15,7 @@
 ▫**Like** | League of Legends
 
 ▫**Hate** | School
+
+### WEbFront Assignment
+
+▫**Week6** | https://depth-5th-webfront-week6.vercel.app/
