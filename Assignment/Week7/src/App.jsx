@@ -7,7 +7,7 @@ function Square({ value, onSquareClick, highlight, label }) {
       className={`square${highlight ? ' square--win' : ''}`}
       data-mark={value ?? ''} // null일 때 '' 을 넣어야 CSS [data-mark='X'] 셀렉터에 걸리지 않음
       onClick={onSquareClick}
-      aria-label={value ? `${value} - ${label}` : label}
+      aria-label={label}
     >
       {value}
     </button>
@@ -16,7 +16,7 @@ function Square({ value, onSquareClick, highlight, label }) {
 
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
-    if (squares[i] || calculateWinner(squares)) return
+    if (squares[i] || calculateWinner(squares)) return // 이미 채워진 칸이거나 게임이 끝난 경우 무시
 
     const nextSquares = squares.slice()
     nextSquares[i] = xIsNext ? 'X' : 'O'
@@ -74,7 +74,7 @@ export default function Game() {
 
   function handlePlay(nextSquares, location) {
     const nextHistory = [
-      ...history.slice(0, currentMove + 1),
+      ...history.slice(0, currentMove + 1), // 타임트래블 후 새 수를 두면 이후 기록 삭제
       { squares: nextSquares, location },
     ]
     setHistory(nextHistory)
