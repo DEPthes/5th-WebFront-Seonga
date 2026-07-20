@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>가계부</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>가계부</h1>
+
+      <section class="summary" id="summary">
+        <article>
+          <hgroup>
+            <h3 id="total-income">0원</h3>
+            <p>총 수입</p>
+          </hgroup>
+        </article>
+        <article>
+          <hgroup>
+            <h3 id="total-expense">0원</h3>
+            <p>총 지출</p>
+          </hgroup>
+        </article>
+        <article>
+          <hgroup>
+            <h3 id="balance">0원</h3>
+            <p>현재 잔액</p>
+          </hgroup>
+        </article>
+      </section>
+
+      <form id="transaction-form">
+        <div class="grid">
+          <select id="type" aria-label="거래 유형" required>
+            <option value="expense">지출</option>
+            <option value="income">수입</option>
+          </select>
+          <select id="category" aria-label="카테고리" required></select>
+          <input id="amount" type="number" placeholder="금액" aria-label="금액" min="1" required />
+          <input id="date" type="date" aria-label="날짜" required />
+        </div>
+        <div id="category-custom-wrap" hidden>
+          <input id="category-custom" type="text" placeholder="새 카테고리 입력" aria-label="새 카테고리 입력" />
+          <label>
+            <input id="category-save" type="checkbox" checked />
+            다음에도 이 카테고리 목록에 표시
+          </label>
+        </div>
+        <input id="memo" type="text" placeholder="메모 (선택)" aria-label="메모" />
+        <button type="submit">등록</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>구분</th>
+              <th>카테고리</th>
+              <th>메모</th>
+              <th>금액</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="transaction-list"></tbody>
+        </table>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
