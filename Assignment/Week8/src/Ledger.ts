@@ -1,4 +1,4 @@
-import type { NewTransaction, Transaction, TransactionType } from "./types.ts";
+import type { NewTransaction, Transaction, TransactionType } from "./types";
 import { parseTransactions } from "./validators.ts";
 
 const STORAGE_KEY = "ledger-transactions";
@@ -48,6 +48,7 @@ export class Ledger {
 
   private load(): { data: Transaction[]; hadError: boolean } {
     const raw = localStorage.getItem(STORAGE_KEY);
+    // localStorage 값이 수동 편집 등으로 깨져있을 수 있어 방어적으로 처리
     return raw ? parseTransactions(raw) : { data: [], hadError: false };
   }
 
@@ -56,6 +57,7 @@ export class Ledger {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.transactions));
       return true;
     } catch {
+      // 저장 공간 초과, 시크릿 모드 등으로 쓰기가 막혀도 앱 동작은 계속되게 함
       return false;
     }
   }
