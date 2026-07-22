@@ -9,7 +9,11 @@
    - `isCategoryMap(x): x is Record<TransactionType, string[]>`, `parseCategories(raw): Record<TransactionType, string[]>`
    - 스키마에 안 맞는 항목은 걸러내고, 파싱 자체가 실패하면 기존처럼 빈 배열/기본값으로 fallback.
    - `Ledger.load()` / `categories.loadCustom()`이 이 함수를 사용하도록 교체.
-2. **폼 검증 함수화** — 같은 파일에 `validateTransactionInput(input: {category, amount, date}): string | null` 추가. category 필수, amount 유한수&양수, date 필수를 검사해 에러 메시지(or null) 반환. `main.ts`의 인라인 `if (!category || ...) return;`을 이 함수 호출로 교체.
+2. **폼 검증 함수화** — 같은 파일에 `validateTransactionInput(input: {category, amount, date, memo}): string | null` 추가. `main.ts`의 인라인 `if (!category || ...) return;`을 이 함수 호출로 교체. 필드별 규칙:
+   - `category`: trim 후 필수 (빈 문자열/공백만 입력 거부).
+   - `amount`: 유한수, 정수(원화라 소수 불가), 0보다 크고 `Number.MAX_SAFE_INTEGER` 이하.
+   - `date`: 필수. `<input type="date">`가 형식(ISO)은 보장하므로 존재 여부만 확인.
+   - `memo`: 선택 항목이라 값 자체는 검증하지 않되, 과도한 길이를 막기 위해 `index.html`에 `maxlength` 네이티브 속성 추가(메모 200자, 커스텀 카테고리명 30자) — JS 검증 대신 브라우저 기본 기능 사용.
 3. **에러 메시지 UI** — `index.html`에 네이티브 `<dialog id="error-dialog">` 추가 (pico.css 기본 스타일 적용). `main.ts`에 `showError(message)` 헬퍼 추가 후 `.showModal()` 호출. 폼 검증 실패뿐 아니라 아래 저장/로드 예외 상황에도 사용.
    - `Ledger.save()` / `categories.addCategory()`가 `boolean`(성공 여부)을 반환하도록 변경. localStorage 쓰기 실패(저장공간 초과, 시크릿 모드 등) 시 `main.ts`가 `showError()`로 안내하되, 메모리 상의 데이터/화면은 그대로 유지.
    - `Ledger`가 생성 시점에 거래 데이터 파싱이 손상되어 있었는지 나타내는 `hadCorruptData` 플래그를 노출. 앱 시작 시 true면 1회 `showError()`로 "저장된 데이터 일부가 손상되어 초기화되었습니다" 안내.
@@ -22,7 +26,7 @@
 - 새 npm 의존성 추가 없음
 
 ## 에러 처리
-- 폼 제출 시 검증 실패 (카테고리 미입력, 금액이 유한한 양수가 아님, 날짜 미입력 등): `showError()`로 dialog에 메시지 표시하고 제출 중단.
+- 폼 제출 시 검증 실패 (카테고리 미입력, 금액이 유한한 양의 정수가 아님, 금액이 안전 범위를 넘음, 날짜 미입력 등): `validateTransactionInput()`이 필드별 원인에 맞는 메시지를 반환하고, `showError()`로 dialog에 표시 후 제출 중단.
 - 거래 데이터 localStorage 파싱 손상: 빈 배열로 fallback하되, 앱 시작 시 `showError()`로 1회 안내 (조용히 지나가면 사용자가 데이터가 사라진 이유를 모름).
 - localStorage 쓰기 실패 (저장공간 초과, 시크릿 모드 등): 메모리 상태는 유지한 채 `showError()`로 "이 항목은 저장되지 못했습니다" 안내.
 - 커스텀 카테고리 목록 파싱 손상: 영향이 작아(단순 편의 기능) 기존처럼 조용히 기본값 fallback, 별도 알림 없음.
