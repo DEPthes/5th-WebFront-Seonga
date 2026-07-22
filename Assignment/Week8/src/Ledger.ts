@@ -1,21 +1,29 @@
-import type { NewTransaction, Transaction, TransactionType } from "./types";
+import type { NewTransaction, Transaction, TransactionType } from "./types.ts";
+import { parseTransactions } from "./validators.ts";
 
 const STORAGE_KEY = "ledger-transactions";
 
 export class Ledger {
-  private transactions: Transaction[] = this.load();
-  private nextId = this.transactions.reduce((max, t) => Math.max(max, t.id), 0) + 1;
+  readonly hadCorruptData: boolean;
+  private transactions: Transaction[];
+  private nextId: number;
 
-  addTransaction(data: NewTransaction): Transaction {
-    const transaction: Transaction = { id: this.nextId++, ...data };
-    this.transactions.push(transaction);
-    this.save();
-    return transaction;
+  constructor() {
+    const { data, hadError } = this.load();
+    this.transactions = data;
+    this.hadCorruptData = hadError;
+    this.nextId = this.transactions.reduce((max, t) => Math.max(max, t.id), 0) + 1;
   }
 
-  removeTransaction(id: number): void {
+  addTransaction(data: NewTransaction): { transaction: Transaction; saved: boolean } {
+    const transaction: Transaction = { id: this.nextId++, ...data };
+    this.transactions.push(transaction);
+    return { transaction, saved: this.save() };
+  }
+
+  removeTransaction(id: number): boolean {
     this.transactions = this.transactions.filter((t) => t.id !== id);
-    this.save();
+    return this.save();
   }
 
   getTransactions(): Transaction[] {
@@ -35,26 +43,20 @@ export class Ledger {
   }
 
   private sumByType(type: TransactionType): number {
-    return this.transactions
-      .filter((t) => t.type === type)
-      .reduce((sum, t) => sum + t.amount, 0);
+    return this.transactions.filter((t) => t.type === type).reduce((sum, t) => sum + t.amount, 0);
   }
 
-  private load(): Transaction[] {
-    try {
-      // localStorage 값이 수동 편집 등으로 깨져있을 수 있어 방어적으로 처리
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
+  private load(): { data: Transaction[]; hadError: boolean } {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? parseTransactions(raw) : { data: [], hadError: false };
   }
 
-  private save(): void {
+  private save(): boolean {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.transactions));
+      return true;
     } catch {
-      // 저장 공간 초과, 시크릿 모드 등으로 쓰기가 막혀도 앱 동작은 계속되게 함
+      return false;
     }
   }
 }
