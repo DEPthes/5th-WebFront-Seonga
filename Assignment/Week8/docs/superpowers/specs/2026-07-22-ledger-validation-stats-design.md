@@ -10,7 +10,10 @@
    - 스키마에 안 맞는 항목은 걸러내고, 파싱 자체가 실패하면 기존처럼 빈 배열/기본값으로 fallback.
    - `Ledger.load()` / `categories.loadCustom()`이 이 함수를 사용하도록 교체.
 2. **폼 검증 함수화** — 같은 파일에 `validateTransactionInput(input: {category, amount, date}): string | null` 추가. category 필수, amount 유한수&양수, date 필수를 검사해 에러 메시지(or null) 반환. `main.ts`의 인라인 `if (!category || ...) return;`을 이 함수 호출로 교체.
-3. **에러 메시지 UI** — `index.html`에 네이티브 `<dialog id="error-dialog">` 추가 (pico.css 기본 스타일 적용). `main.ts`에 `showError(message)` 헬퍼 추가 후 `.showModal()` 호출. 폼 검증 실패 시 사용.
+3. **에러 메시지 UI** — `index.html`에 네이티브 `<dialog id="error-dialog">` 추가 (pico.css 기본 스타일 적용). `main.ts`에 `showError(message)` 헬퍼 추가 후 `.showModal()` 호출. 폼 검증 실패뿐 아니라 아래 저장/로드 예외 상황에도 사용.
+   - `Ledger.save()` / `categories.addCategory()`가 `boolean`(성공 여부)을 반환하도록 변경. localStorage 쓰기 실패(저장공간 초과, 시크릿 모드 등) 시 `main.ts`가 `showError()`로 안내하되, 메모리 상의 데이터/화면은 그대로 유지.
+   - `Ledger`가 생성 시점에 거래 데이터 파싱이 손상되어 있었는지 나타내는 `hadCorruptData` 플래그를 노출. 앱 시작 시 true면 1회 `showError()`로 "저장된 데이터 일부가 손상되어 초기화되었습니다" 안내.
+   - 커스텀 카테고리 목록 손상은 영향이 작으므로(단순 목록 축소) 기존처럼 조용히 기본값 fallback 유지, 별도 알림 없음.
 4. **통계 탭** — 기존 페이지에 탭 버튼(가계부/통계) 추가, 두 `<section>`을 hidden 토글로 전환 (라우터 없이). `src/stats.ts` 신규: 트랜잭션 배열을 받아 카테고리별 합계, 월별 수입/지출 추이, 수입·지출 비율을 계산하는 순수 함수. 렌더링은 테이블 + CSS width bar (차트 라이브러리 추가 없음).
 
 ## 비범위
@@ -19,8 +22,10 @@
 - 새 npm 의존성 추가 없음
 
 ## 에러 처리
-- localStorage 파싱 실패: 기존처럼 조용히 기본값 fallback (사용자 데이터 자체가 깨진 경우라 얼럿을 띄워도 취할 액션이 없음).
-- 폼 제출 시 검증 실패: `showError()`로 dialog에 메시지 표시.
+- 폼 제출 시 검증 실패 (카테고리 미입력, 금액이 유한한 양수가 아님, 날짜 미입력 등): `showError()`로 dialog에 메시지 표시하고 제출 중단.
+- 거래 데이터 localStorage 파싱 손상: 빈 배열로 fallback하되, 앱 시작 시 `showError()`로 1회 안내 (조용히 지나가면 사용자가 데이터가 사라진 이유를 모름).
+- localStorage 쓰기 실패 (저장공간 초과, 시크릿 모드 등): 메모리 상태는 유지한 채 `showError()`로 "이 항목은 저장되지 못했습니다" 안내.
+- 커스텀 카테고리 목록 파싱 손상: 영향이 작아(단순 편의 기능) 기존처럼 조용히 기본값 fallback, 별도 알림 없음.
 
 ## 테스트 방침
 - `validators.ts`의 파싱/검증 함수는 순수 함수이므로 별도 실행 가능한 자가 점검(간단한 `assert` 스크립트 또는 브라우저 수동 테스트)으로 확인.
