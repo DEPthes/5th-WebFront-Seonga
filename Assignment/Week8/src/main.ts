@@ -45,6 +45,7 @@ function escapeHtml(text: string): string {
 }
 
 function showError(message: string): void {
+  if (errorDialog.open) errorDialog.close();
   errorMessageEl.textContent = message;
   errorDialog.showModal();
 }
